@@ -1,0 +1,6 @@
+# Ignorar ambiente virtual
+ml-env/
+
+# Ignorar as pastas de dados e seus conteúdos
+data/
+metadata/
