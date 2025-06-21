@@ -4,3 +4,4 @@ ml-env/
 # Ignorar as pastas de dados e seus conteúdos
 data/
 metadata/
+artifacts/
