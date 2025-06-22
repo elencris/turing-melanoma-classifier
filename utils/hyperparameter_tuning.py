@@ -69,17 +69,18 @@ def objective(trial: optuna.trial.Trial,
     """
     param = {
         'max_depth': trial.suggest_int('max_depth', 3, 12),
-        'num_leaves': trial.suggest_int('num_leaves', 15, 150),
-        'learning_rate': trial.suggest_float('learning_rate', 1e-3, 0.1, log=True),
-        'feature_fraction': trial.suggest_float('feature_fraction', 0.6, 1.0),
-        'bagging_fraction': trial.suggest_float('bagging_fraction', 0.6, 1.0),
+        'num_leaves': trial.suggest_int('num_leaves', 15, 250),
+        'learning_rate': trial.suggest_float('learning_rate', 1e-3, 0.2, log=True),
+        'feature_fraction': trial.suggest_float('feature_fraction', 0.5, 1.0),
+        'bagging_fraction': trial.suggest_float('bagging_fraction', 0.4, 1.0),
         'bagging_freq': trial.suggest_int('bagging_freq', 1, 10),
-        'min_child_samples': trial.suggest_int('min_child_samples', 5, 100),
+        'min_child_samples': trial.suggest_int('min_child_samples', 5, 150),
         'lambda_l1': trial.suggest_float('lambda_l1', 1e-8, 10.0, log=True),
         'lambda_l2': trial.suggest_float('lambda_l2', 1e-8, 10.0, log=True),
-        'min_gain_to_split': trial.suggest_float('min_gain_to_split', 0.0, 15.0),
+        'min_gain_to_split': trial.suggest_float('min_gain_to_split', 0.0, 10.0),
     }
     param.update(FIXED_PARAMS)
+    
 
     train_data = lgb.Dataset(X_train, label=y_train)
     valid_data = lgb.Dataset(X_val, label=y_val, reference=train_data)

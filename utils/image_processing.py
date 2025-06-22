@@ -49,6 +49,8 @@ from sklearn.cluster import KMeans
 from scipy.stats import skew, kurtosis
 from skimage.feature import local_binary_pattern
 from typing import List, Optional, Union
+from skimage.feature.texture import graycomatrix, graycoprops
+
 
 def resize_image(img_array: np.ndarray, size: tuple[int, int] = (200, 200)) -> np.ndarray:
     """Redimensiona a imagem para o tamanho especificado usando interpolação LANCZOS.
@@ -169,6 +171,21 @@ def extract_lbp_features(image: np.ndarray, P: int = 8, R: int = 1) -> List[floa
     hist /= (hist.sum() + 1e-6)
     return hist.tolist()
 
+def extract_haralick_features(image_gray: np.ndarray) -> List[float]:
+    """Extrai características de Haralick (GLCM) da imagem em tons de cinza."""
+    distances = [1, 2, 3]
+    angles = [0, np.pi/4, np.pi/2, 3*np.pi/4]
+    props = ['contrast', 'dissimilarity', 'homogeneity', 'energy', 'correlation', 'ASM']
+
+    glcm = graycomatrix(image_gray, distances, angles, levels=256, symmetric=True, normed=True)
+    
+    features = []
+    for prop in props:
+        values = graycoprops(glcm, prop)
+        features.extend(values.mean(axis=1).tolist())  # média sobre os ângulos
+
+    return features
+
 def calculate_asymmetry(mask: np.ndarray) -> List[float]:
     """Calcula medidas de assimetria vertical e horizontal da máscara binária.
 
@@ -253,6 +270,8 @@ def extract_features(processed_img: np.ndarray, mask_img: np.ndarray) -> Optiona
     gray_for_lbp = cv2.cvtColor(processed_img, cv2.COLOR_RGB2GRAY)
     lbp_features = extract_lbp_features(gray_for_lbp)
 
+    haralick_features = extract_haralick_features(gray_for_lbp)
+
     features = [
         np.mean(flat),
         np.std(flat),
@@ -265,7 +284,7 @@ def extract_features(processed_img: np.ndarray, mask_img: np.ndarray) -> Optiona
         compactness,
         aspect_ratio,
         excentricidade
-    ] + color_features + asymmetry_features + lbp_features
+    ] + color_features + asymmetry_features + lbp_features + haralick_features
 
     return features
 

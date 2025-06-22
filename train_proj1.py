@@ -40,6 +40,7 @@ from sklearn.preprocessing import StandardScaler
 import lightgbm as lgb
 from utils.hyperparameter_tuning import tune_lgbm_hyperparameters
 
+
 # Semente global para reprodutibilidade
 SEED: int = 42
 np.random.seed(SEED)
