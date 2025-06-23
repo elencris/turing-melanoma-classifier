@@ -81,7 +81,6 @@ def objective(trial: optuna.trial.Trial,
     }
     param.update(FIXED_PARAMS)
     
-
     train_data = lgb.Dataset(X_train, label=y_train)
     valid_data = lgb.Dataset(X_val, label=y_val, reference=train_data)
 

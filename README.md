@@ -17,6 +17,11 @@ O problema original de múltiplas classes foi convertido em um desafio binário:
 
 ---
 
+## ✅ Requisitos
+
+- Python >= 3.12
+- pip >= 25.1
+
 ## ⚙️ Instalação
 
 ### 1. Clone o repositório
