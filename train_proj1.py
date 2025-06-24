@@ -13,21 +13,6 @@ Funcionalidades
 - Treina o modelo final com os melhores parâmetros encontrados e semente fixa para reprodutibilidade.
 - Salva scaler, modelo treinado e predições de treino em arquivos organizados em pastas.
 - Gera arquivo CSV com predições de treino (nome da imagem, label real, score predito).
-
-Argumentos de Linha de Comando
-------------------------------
---train_dataset : str
-    Caminho para o arquivo pickle contendo o dataset de treino (features + labels).
---val_dataset : str
-    Caminho para o arquivo pickle contendo o dataset de validação (features + labels).
---output_dir : str, opcional
-    Diretório base para salvar scaler, modelo e resultados (default: artifacts).
---tune_trials : int, opcional
-    Número de trials para busca de hiperparâmetros com Optuna (default: 50).
-
-Uso Exemplo
------------
-python train_proj1.py --train_dataset caminho/treino.pkl --val_dataset caminho/val.pkl --output_dir artifacts --tune_trials 50
 """
 
 import argparse

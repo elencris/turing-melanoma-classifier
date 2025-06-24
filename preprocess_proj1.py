@@ -8,7 +8,7 @@ Este módulo realiza o pré-processamento dos conjuntos de imagens de treino, va
 Variáveis Globais
 -----------------
 IMAGE_SIZE : tuple[int, int]
-    Dimensão padrão para redimensionamento das imagens (200, 200).
+    Dimensão padrão para redimensionamento das imagens.
 RANDOM_STATE : int
     Semente fixa para garantir reprodutibilidade na subamostragem.
 
@@ -16,10 +16,6 @@ Funções
 -------
 process_dataset(split_name: str, image_dir: str, metadata_path: str, train_fraction: float = 1.0) -> None
     Processa o dataset especificado aplicando pré-processamento e extração de características.
-
-Uso na Linha de Comando
------------------------
-python preprocess_proj1.py --train_data_dir <diretório_imagens_treino> --val_data_dir <diretório_imagens_validação> --test_data_dir <diretório_imagens_teste> --train_metadata_path <csv_metadados_treino> --val_metadata_path <csv_metadados_validação> --test_metadata_path <csv_metadados_teste> --train_fraction <fração_treino> --output_dir <diretório_saida>
 """
 
 import argparse
@@ -44,38 +40,38 @@ RANDOM_STATE: int = 42
 parser = argparse.ArgumentParser(description="Pré-processa imagens para treino, validação e teste.")
 
 parser.add_argument(
-    "--train_data_dir",
+    "--train_data",
     type=str,
     default="data/train",
     help="Diretório com as imagens de treino."
 )
 parser.add_argument(
-    "--val_data_dir",
+    "--val_data",
     type=str,
     default="data/val",
     help="Diretório com as imagens de validação."
 )
 parser.add_argument(
-    "--test_data_dir",
+    "--test_data",
     type=str,
     default="data/test",
     help="Diretório com as imagens de teste."
 )
 
 parser.add_argument(
-    "--train_metadata_path",
+    "--train_metadata",
     type=str,
     default="metadata/train.csv",
     help="CSV com metadados do conjunto de treino."
 )
 parser.add_argument(
-    "--val_metadata_path",
+    "--val_metadata",
     type=str,
     default="metadata/val.csv",
     help="CSV com metadados do conjunto de validação."
 )
 parser.add_argument(
-    "--test_metadata_path",
+    "--test_metadata",
     type=str,
     default="metadata/test.csv",
     help="CSV com metadados do conjunto de teste."
@@ -209,8 +205,8 @@ def process_dataset(split_name: str, image_dir: str, metadata_path: str, train_f
     print(f"[INFO] Total de amostras processadas: {len(df_out)}")
 
 # Execução principal
-process_dataset("train", args.train_data_dir, args.train_metadata_path, train_fraction=args.train_fraction)
-process_dataset("val", args.val_data_dir, args.val_metadata_path)
-process_dataset("test", args.test_data_dir, args.test_metadata_path)
+process_dataset("train", args.train_data, args.train_metadata, train_fraction=args.train_fraction)
+process_dataset("val", args.val_data, args.val_metadata)
+process_dataset("test", args.test_data, args.test_metadata)
 
 print("[INFO] Todos os datasets foram processados com sucesso.")

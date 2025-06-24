@@ -13,21 +13,6 @@ Funcionalidades
 - Gera e salva gráficos de matriz de confusão, curva ROC e curva precision-recall.
 - Salva resumo de métricas detalhado para cada conjunto (train e test).
 - Exibe principais métricas no terminal.
-
-Argumentos de Linha de Comando
-------------------------------
---train_dataset : str
-    Arquivo pickle do dataset de treino (features + labels).
---train_predictions : str
-    Arquivo CSV com predições de treino.
---test_dataset : str
-    Arquivo pickle do dataset de teste (features + labels).
---test_predictions : str
-    Arquivo CSV com predições de teste.
-
-Uso Exemplo
------------
-python postprocess_proj1.py --train_dataset train.pkl --train_predictions train_preds.csv --test_dataset test.pkl --test_predictions test_preds.csv
 """
 
 import argparse

@@ -35,12 +35,12 @@ random.seed(SEED)
 
 # Parâmetros fixos para o modelo LightGBM
 FIXED_PARAMS = {
-    'objective': 'binary',
-    'metric': 'auc',
-    'verbosity': -1,
-    'boosting_type': 'gbdt',
-    'is_unbalance': True,
-    'seed': SEED  # Garante reprodutibilidade no LightGBM
+    'objective': 'binary',       # Problema binário
+    'metric': 'auc',             # Métrica AUC-ROC
+    'verbosity': -1,             # Sem logs verbose
+    'boosting_type': 'gbdt',     # Tipo de boosting (gradient boosting)
+    'is_unbalance': True,        # Ajuste para classes desbalanceadas
+    'seed': SEED                 # Semente para reprodutibilidade
 }
 
 def objective(trial: optuna.trial.Trial, 
@@ -68,16 +68,20 @@ def objective(trial: optuna.trial.Trial,
         AUC-ROC obtida no conjunto de validação com os parâmetros do trial.
     """
     param = {
-        'max_depth': trial.suggest_int('max_depth', 3, 30),
-        'num_leaves': trial.suggest_int('num_leaves', 15, 250),
-        'learning_rate': trial.suggest_float('learning_rate', 1e-3, 0.2, log=True),
-        'feature_fraction': trial.suggest_float('feature_fraction', 0.5, 1.0),
-        'bagging_fraction': trial.suggest_float('bagging_fraction', 0.4, 1.0),
-        'bagging_freq': trial.suggest_int('bagging_freq', 1, 10),
-        'min_child_samples': trial.suggest_int('min_child_samples', 5, 200),
-        'lambda_l1': trial.suggest_float('lambda_l1', 1e-8, 10.0, log=True),
-        'lambda_l2': trial.suggest_float('lambda_l2', 1e-8, 10.0, log=True),
-        'min_gain_to_split': trial.suggest_float('min_gain_to_split', 0.0, 10.0),
+        'max_depth': trial.suggest_int('max_depth', 3, 30),                        # Limite da profundidade da árvore
+        'num_leaves': trial.suggest_int('num_leaves', 15, 250),                    # Nº máx. de folhas por árvore
+        'learning_rate': trial.suggest_float('learning_rate', 1e-3, 0.2, log=True),# Passo de aprendizado
+
+        'feature_fraction': trial.suggest_float('feature_fraction', 0.5, 1.0),     # % de features usadas por árvore
+        'bagging_fraction': trial.suggest_float('bagging_fraction', 0.4, 1.0),     # % de amostras usadas por árvore
+        'bagging_freq': trial.suggest_int('bagging_freq', 1, 10),                  # Freq. para aplicar bagging
+
+        'min_child_samples': trial.suggest_int('min_child_samples', 5, 200),       # Mínimo de amostras por folha
+
+        'lambda_l1': trial.suggest_float('lambda_l1', 1e-8, 10.0, log=True),       # Penalidade L1
+        'lambda_l2': trial.suggest_float('lambda_l2', 1e-8, 10.0, log=True),       # Penalidade L2
+
+        'min_gain_to_split': trial.suggest_float('min_gain_to_split', 0.0, 10.0),  # Ganho mínimo para dividir
     }
     param.update(FIXED_PARAMS)
     

@@ -12,21 +12,6 @@ Funcionalidades
 - Carrega modelo LightGBM treinado salvo em arquivo pickle.
 - Gera predições probabilísticas para as amostras do conjunto de teste.
 - Salva um arquivo CSV com as colunas: image_name, y_test (rótulo verdadeiro), y_pred (score previsto).
-
-Argumentos de Linha de Comando
-------------------------------
---test_dataset : str
-    Arquivo pickle com dataset de teste (features + labels).
---scaler_path : str
-    Caminho para scaler StandardScaler salvo (.pkl).
---model_path : str
-    Caminho para modelo LightGBM treinado salvo (.pkl).
---output_dir : str, opcional
-    Diretório para salvar predições (default: artifacts/results).
-
-Uso Exemplo
------------
-python test_proj1.py --test_dataset caminho/teste.pkl --scaler_path caminho/scaler.pkl --model_path caminho/modelo.pkl --output_dir artifacts/results
 """
 
 import argparse

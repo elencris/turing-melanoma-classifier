@@ -1,4 +1,4 @@
-# 🧠 Projeto de Classificação de Imagens Médicas - Equipe Turing
+# 🔬 Projeto de Classificação de Imagens Médicas - Equipe Turing
 
 ## 🎯 Objetivo
 
@@ -21,6 +21,8 @@ O problema original de múltiplas classes foi convertido em um desafio binário:
 
 - Python >= 3.12
 - pip >= 25.1
+
+---
 
 ## ⚙️ Instalação
 
@@ -71,6 +73,8 @@ Baixe e descompacte os dados da [ISIC 2018 - Task 3](https://challenge.isic-arch
 
 ## 📁 Estrutura sugerida
 
+A pasta `artifacts/` e seu conteúdo são gerados automaticamente em tempo de execução.
+
 ```
 turing-melanoma-classifier/
 ├── data/
@@ -99,7 +103,7 @@ Envie os comandos abaixo em seu terminal Linux ou Windows para executar cada eta
 ### 1. Pré-processamento
 
 ```bash
-python preprocess_proj1.py --train_data_dir data/train --val_data_dir data/val --test_data_dir data/test --train_metadata_path metadata/train.csv --val_metadata_path metadata/val.csv --test_metadata_path metadata/test.csv --train_fraction 1.0 --output_dir artifacts/preprocessed_dataset
+python preprocess_proj1.py --train_data data/train --val_data data/val --test_data data/test --train_metadata metadata/train.csv --val_metadata metadata/val.csv --test_metadata metadata/test.csv --train_fraction 1.0 --output_dir artifacts/preprocessed_dataset
 ```
 
 ### 2. Treinamento
@@ -122,23 +126,32 @@ python postprocess_proj1.py --train_dataset artifacts/preprocessed_dataset/train
 
 ---
 
-## ⚙️ Resumo dos Módulos
+## 📌 Tabela de Uso dos Scripts
 
-* preprocess_proj1: Recebe argumentos e prepara os Datasets
+| Script | Entrada(s) | Saída(s) | Descrição curta |
+|--------|------------|----------|-----------------|
+| `preprocess_proj1.py` | Pastas de imagens e arquivos `.csv` com rótulos | `.pkl` dos datasets pré-processados | Extrai features das imagens e salva conjuntos prontos |
+| `train_proj1.py` | `train_dataset.pkl`, `val_dataset.pkl` | Modelo `.pkl`, scaler `.pkl`, histórico de treino | Treina o modelo LightGBM com busca de hiperparâmetros via Optuna |
+| `test_proj1.py` | `test_dataset.pkl`, modelo `.pkl`, scaler `.pkl` | CSV com predições | Gera predições com o modelo treinado |
+| `postprocess_proj1.py`| Datasets e arquivos de predição (`.csv`) | Métricas, gráficos e relatórios | Calcula métricas e gera análise do desempenho final |
 
-* image_processing: Funções para tramento dos dados e extração de  features
+---
 
-* train_proj1: Utiliza os dados processados para o treino do modelo
+## ⚡ Sobre o LightGBM
 
-* hyperparameter_tuning: Seleção automática de hiperparâmetros
+Este projeto utiliza o **[LightGBM](https://lightgbm.readthedocs.io/)** como modelo principal de aprendizado supervisionado.
 
-* test_proj1: Carrega e normaliza dados de teste para predizer com o modelo treinado 
+O LightGBM é um framework de **gradient boosting** que utiliza algoritmos de árvores de decisão e é projetado para ser **rápido, eficiente e escalável**, com os seguintes benefícios:
 
-* postprocess_proj1: Calcula métricas e gráficos para avaliação do modelo
+- 🚀 **Treinamento mais rápido** e maior eficiência;
+- 💾 **Baixo consumo de memória**;
+- 🎯 **Alta acurácia** em tarefas de classificação;
+- ⚙️ Suporte a **aprendizado paralelo, distribuído e com GPU**;
+- 🧠 Ideal para **grandes volumes de dados**.
 
-* metrics: Exporta informações e imagens obtidas da avaliação do modelo
+> Neste projeto, o LightGBM é combinado com **Optuna** para otimização automática de hiperparâmetros, melhorando ainda mais a performance do modelo na detecção de melanoma.
 
-
+---
 
 ## 🧰 Bibliotecas
 
