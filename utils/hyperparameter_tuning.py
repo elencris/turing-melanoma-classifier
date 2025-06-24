@@ -68,13 +68,13 @@ def objective(trial: optuna.trial.Trial,
         AUC-ROC obtida no conjunto de validação com os parâmetros do trial.
     """
     param = {
-        'max_depth': trial.suggest_int('max_depth', 3, 12),
+        'max_depth': trial.suggest_int('max_depth', 3, 30),
         'num_leaves': trial.suggest_int('num_leaves', 15, 250),
         'learning_rate': trial.suggest_float('learning_rate', 1e-3, 0.2, log=True),
         'feature_fraction': trial.suggest_float('feature_fraction', 0.5, 1.0),
         'bagging_fraction': trial.suggest_float('bagging_fraction', 0.4, 1.0),
         'bagging_freq': trial.suggest_int('bagging_freq', 1, 10),
-        'min_child_samples': trial.suggest_int('min_child_samples', 5, 150),
+        'min_child_samples': trial.suggest_int('min_child_samples', 5, 200),
         'lambda_l1': trial.suggest_float('lambda_l1', 1e-8, 10.0, log=True),
         'lambda_l2': trial.suggest_float('lambda_l2', 1e-8, 10.0, log=True),
         'min_gain_to_split': trial.suggest_float('min_gain_to_split', 0.0, 10.0),
@@ -88,7 +88,7 @@ def objective(trial: optuna.trial.Trial,
         param,
         train_data,
         valid_sets=[valid_data],
-        num_boost_round=1000,
+        num_boost_round=10000,
         callbacks=[
             lgb.early_stopping(stopping_rounds=50),
             lgb.log_evaluation(0)

@@ -122,6 +122,24 @@ python postprocess_proj1.py --train_dataset artifacts/preprocessed_dataset/train
 
 ---
 
+## ⚙️ Resumo dos Módulos
+
+* preprocess_proj1: Recebe argumentos e prepara os Datasets
+
+* image_processing: Funções para tramento dos dados e extração de  features
+
+* train_proj1: Utiliza os dados processados para o treino do modelo
+
+* hyperparameter_tuning: Seleção automática de hiperparâmetros
+
+* test_proj1: Carrega e normaliza dados de teste para predizer com o modelo treinado 
+
+* postprocess_proj1: Calcula métricas e gráficos para avaliação do modelo
+
+* metrics: Exporta informações e imagens obtidas da avaliação do modelo
+
+
+
 ## 🧰 Bibliotecas
 
 - [`joblib`](https://joblib.readthedocs.io/en/latest/)
